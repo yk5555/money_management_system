@@ -72,4 +72,20 @@ button {
 #footer {
     text-align: center;
 }
+table#record_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
+
+table#record_list .record_date {
+    width: 20%;
+}
+table#record_list .record_title {
+    width: 30%;
+}
+table#record_list .record_money {
+    width: 25%;
+}
+table#record_list .record_action {
+    width: 10%;
 }
