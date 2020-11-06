@@ -14,17 +14,20 @@
 <input type="date" name="record_date" value="<fmt:formatDate value='${record.record_date}' pattern='yyyy-MM-dd' />" />
 <br /><br />
 
-<label for="title">タイトル</label><br />
+<label for="money">金額</label><br />
+<input type="number" name="money" value="${record.money}" />
+<th>円</th>
+<br /><br />
+
+<label for="title">内容</label><br />
 <input type="text" name="title" value="${record.title}" />
 <br /><br />
 
-<label for="money">金額</label><br />
-<input type="number" name="money" value="${record.money}" />
-<br /><br />
 
-<label for="content">内容</label><br />
+
+<label for="content">詳細</label><br />
 <textarea name="content" rows="10" cols="50">${record.content}</textarea>
 <br /><br />
 
 <input type="hidden" name="_token" value="${_token}" />
-<button type="submit">投稿</button>
+<button type="submit">登録</button>

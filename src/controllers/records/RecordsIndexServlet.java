@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Person;
 import models.Record;
 import utils.DBUtil;
 
@@ -41,16 +42,37 @@ public class RecordsIndexServlet extends HttpServlet {
         } catch(Exception e) {
             page = 1;
         }
-        List<Record> records = em.createNamedQuery("getAllRecords", Record.class)
-                                  .setFirstResult(15 * (page - 1))
-                                  .setMaxResults(15)
-                                  .getResultList();
+
+        Person login_person = (Person)request.getSession().getAttribute("login_person");
+
+        List<Record> Records = em.createNamedQuery("getMyAllRecords", Record.class)
+                .setParameter("person", login_person)
+                .setFirstResult(15 * (page - 1))
+                .setMaxResults(15)
+                .getResultList();
 
 
+
+
+        long records_count = (long)em.createNamedQuery("getMyRecordsCount", Long.class)
+                .setParameter("person", login_person)
+                .getSingleResult();
+
+        long records_money;
+        try{
+              records_money = em.createNamedQuery("getRecordsMoney", Long.class)
+                .setParameter("person", login_person)
+                .getSingleResult();
+        }catch (NullPointerException e){
+              records_money = 0;
+        }
 
         em.close();
 
-        request.setAttribute("records", records);
+        request.setAttribute("records", Records);
+        request.setAttribute("records_count", records_count);
+
+        request.setAttribute("records_money", records_money);
 
         request.setAttribute("page", page);
         if(request.getSession().getAttribute("flush") != null) {
